@@ -6,7 +6,7 @@ module.exports = ({ env }) => ({
       secretAccessKey: env("AWS_ACCESS_SECRET"),
       region: "eu-central-1",
       params: {
-        Bucket: "strapi-test-dtrechas",
+        Bucket: env("AWS_BUCKET_NAME"),
       },
     },
   },
