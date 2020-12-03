@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "blogs",
+  "collectionName": "posts",
   "info": {
-    "name": "blog"
+    "name": "post"
   },
   "options": {
     "increments": true,
@@ -14,12 +14,23 @@
       "type": "string",
       "required": true
     },
+    "description": {
+      "type": "string"
+    },
     "content": {
       "type": "richtext",
       "required": true
     },
-    "description": {
-      "type": "string"
+    "tag": {
+      "type": "enumeration",
+      "enum": [
+        "CSS",
+        "JavaScript",
+        "React",
+        "angular",
+        "other"
+      ],
+      "required": true
     }
   }
 }
