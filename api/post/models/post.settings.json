@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "posts",
   "info": {
-    "name": "post"
+    "name": "post",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -31,6 +32,9 @@
         "other"
       ],
       "required": true
+    },
+    "tags": {
+      "collection": "tag"
     }
   }
 }
