@@ -22,17 +22,6 @@
       "type": "richtext",
       "required": true
     },
-    "tag": {
-      "type": "enumeration",
-      "enum": [
-        "CSS",
-        "JavaScript",
-        "React",
-        "angular",
-        "other"
-      ],
-      "required": true
-    },
     "tags": {
       "collection": "tag"
     }
