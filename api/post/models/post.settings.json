@@ -16,7 +16,7 @@
       "required": true
     },
     "description": {
-      "type": "string"
+      "type": "text"
     },
     "content": {
       "type": "richtext",
@@ -24,6 +24,11 @@
     },
     "tags": {
       "collection": "tag"
+    },
+    "slug": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }
