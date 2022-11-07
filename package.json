@@ -1,8 +1,8 @@
 {
   "name": "personal-site-strapi",
   "private": true,
-  "version": "0.1.0",
-  "description": "A Strapi application",
+  "version": "1.0.0",
+  "description": "Strapi backend for my personal site",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
@@ -10,13 +10,13 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/plugin-i18n": "4.4.5",
-    "@strapi/plugin-users-permissions": "4.4.5",
-    "@strapi/strapi": "4.4.5",
-    "pg": "^8.6.0"
+    "@strapi/strapi": "4.4.7",
+    "@strapi/plugin-users-permissions": "4.4.7",
+    "@strapi/plugin-i18n": "4.4.7",
+    "pg": "8.8.0"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Dimitris Trechas"
   },
   "strapi": {
     "uuid": "53d3879d-1afd-4345-9751-890d664ffcd1"
