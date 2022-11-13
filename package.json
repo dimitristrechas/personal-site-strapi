@@ -15,9 +15,7 @@
     "@strapi/strapi": "4.5.0",
     "pg": "^8.8.0"
   },
-  "author": {
-    "name": "Dimitris Trechas"
-  },
+  "author": "Dimitris Trechas <dimitristrechas@gmail.com> (https://www.dimitristrechas.com)",
   "strapi": {
     "uuid": "53d3879d-1afd-4345-9751-890d664ffcd1"
   },
