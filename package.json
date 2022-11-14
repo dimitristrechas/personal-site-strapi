@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "description": "Strapi backend for my personal site",
   "scripts": {
-    "develop": "strapi develop",
+    "dev": "docker-compose up",
+    "develop": "docker-compose up",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi"
