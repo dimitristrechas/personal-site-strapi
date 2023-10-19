@@ -75,8 +75,8 @@ export default ({ env }) => {
         schema: env("DATABASE_SCHEMA", "public"),
       },
       pool: {
-        min: 0,
-        max: 100,
+        min: env.int("DATABASE_POOL_MIN", 2),
+        max: env.int("DATABASE_POOL_MAX", 100),
         acquireTimeoutMillis: 300000,
         createTimeoutMillis: 300000,
         destroyTimeoutMillis: 50000,
