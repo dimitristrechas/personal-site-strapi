@@ -1,21 +1,30 @@
-FROM node:18-alpine3.18
-# Installing libvips-dev for sharp Compatibility
-RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev git build-essential python
-ARG NODE_ENV=development
-ENV NODE_ENV=${NODE_ENV}
+FROM node:18-bullseye
+
+# Install build tools and libvips for sharp
+RUN apt-get update && apt-get install -y \
+  build-essential \
+  python3 \
+  libvips-dev \
+  git
 
 WORKDIR /opt/
 COPY package.json yarn.lock ./
+
+# Install sharp separately to avoid issues
+RUN yarn add sharp --platform=linux --arch=x64
+
+# Install node-gyp globally
 RUN yarn global add node-gyp
-RUN yarn add sharp
-RUN yarn config set network-timeout 600000 -g && yarn install
 
-ENV PATH=/opt/node_modules/.bin:$PATH
+# Install remaining project dependencies
+RUN yarn install --network-timeout 600000
 
+# Set up application
 WORKDIR /opt/app
 COPY . .
 RUN chown -R node:node /opt/app
 USER node
+
 RUN ["yarn", "build"]
 EXPOSE 1337
 CMD ["yarn", "develop"]
