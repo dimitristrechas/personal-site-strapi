@@ -1,24 +1,27 @@
-FROM node:18-bullseye
+FROM node:20-bullseye
 
-# Install build tools and libvips for sharp
 RUN apt-get update && apt-get install -y \
   build-essential \
   python3 \
   libvips-dev \
   git
 
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
 WORKDIR /opt/
 COPY package.json yarn.lock ./
 
-# Install remaining project dependencies
-RUN yarn install --network-timeout 600000
+RUN yarn global add node-gyp
+RUN yarn install --frozen-lockfile
 
-# Set up application
 WORKDIR /opt/app
 COPY . .
+RUN yarn build
+
 RUN chown -R node:node /opt/app
 USER node
 
-RUN ["yarn", "build"]
 EXPOSE 1337
-CMD ["yarn", "develop"]
+
+CMD ["yarn", "start"]

@@ -2,7 +2,9 @@ version: "3"
 services:
   personal-site-strapi:
     container_name: personal-site-strapi
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.development
     image: personal-site-strapi:latest
     restart: unless-stopped
     env_file: .env

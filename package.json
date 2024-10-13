@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "strapi build",
-    "build:docker": "docker-compose up",
+    "build:docker": "docker compose up --remove-orphans --build --force-recreate -d",
     "dev": "strapi develop",
     "develop": "strapi develop",
     "start": "strapi start",
