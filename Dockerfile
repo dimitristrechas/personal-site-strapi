@@ -10,12 +10,6 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /opt/
 COPY package.json yarn.lock ./
 
-# Install sharp separately to avoid issues
-RUN yarn add sharp --platform=linux --arch=x64
-
-# Install node-gyp globally
-RUN yarn global add node-gyp
-
 # Install remaining project dependencies
 RUN yarn install --network-timeout 600000
 
