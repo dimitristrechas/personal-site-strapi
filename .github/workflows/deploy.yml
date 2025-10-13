@@ -27,17 +27,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          # Multitargeting for better compatibility
-          platforms: |
-            linux/amd64
-            linux/arm64
-
-          # Multiple, descriptive tags for better version control
-          tags: |
-            dtrechas/personal-site-strapi:latest
-            dtrechas/personal-site-strapi:${{ github.sha }}
-            dtrechas/personal-site-strapi:main
-
+          platforms: linux/arm64
+          tags: dtrechas/personal-site-strapi:latest
           # Enable build caching for faster consecutive builds
           cache-from: type=registry,ref=dtrechas/personal-site-strapi:buildcache
           cache-to: type=registry,ref=dtrechas/personal-site-strapi:buildcache,mode=max
