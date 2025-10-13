@@ -14,7 +14,6 @@ export default {
       await next();
     });
   },
-
   /**
    * An asynchronous bootstrap function that runs before
    * your application gets started.
