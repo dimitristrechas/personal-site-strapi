@@ -27,5 +27,4 @@ ENV PATH=/opt/node_modules/.bin:$PATH
 RUN chown -R node:node /opt/app
 USER node
 EXPOSE 1337
-# Add this for better error visibility
-CMD ["sh", "-c", "yarn start || (echo 'Container failed to start. Check logs above.' && sleep 300)"]
+CMD ["yarn", "start"]
