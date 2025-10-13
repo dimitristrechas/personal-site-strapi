@@ -10,10 +10,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Updated to v4 for latest
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3 # Updated to v3 for latest
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -22,11 +22,22 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5 # Updated to v5 for latest
         with:
           context: .
           file: ./Dockerfile
           push: true
+          # Multitargeting for better compatibility
+          platforms: |
+            linux/amd64
+            linux/arm64
+
+          # Multiple, descriptive tags for better version control
           tags: |
             dtrechas/personal-site-strapi:latest
-          platforms: linux/amd64,linux/arm64
+            dtrechas/personal-site-strapi:${{ github.sha }}
+            dtrechas/personal-site-strapi:main
+
+          # Enable build caching for faster consecutive builds
+          cache-from: type=registry,ref=dtrechas/personal-site-strapi:buildcache
+          cache-to: type=registry,ref=dtrechas/personal-site-strapi:buildcache,mode=max
