@@ -48,6 +48,7 @@ echo -e " ${BLUE}(1)${NC}  Fresh build & start development server"
 echo -e " ${BLUE}(2)${NC}  Stop containers"
 echo -e " ${BLUE}(3)${NC}  Show Docker container status"
 echo -e " ${BLUE}(4)${NC}  Check for npm updates"
+echo -e " ${BLUE}(5)${NC}  Seed database with sample data"
 echo ""
 echo -e "${YELLOW}Choose an option:${NC} "
 read OPTION
@@ -84,9 +85,19 @@ case $OPTION in
     npx npm-check-updates
     ;;
 
+    5)
+    echo -e "${CYAN}Seeding database with sample data...${NC}"
+    if docker exec -t personal-site-strapi yarn seed; then
+        echo -e "${GREEN}✅ Database seeded successfully${NC}"
+    else
+        echo -e "${RED}❌ Failed to seed database${NC}"
+        exit 1
+    fi
+    ;;
+
     *)
     echo -e "${RED}❌ Unknown option: $OPTION${NC}"
-    echo -e "${YELLOW}Please choose a valid option (1-4)${NC}"
+    echo -e "${YELLOW}Please choose a valid option (1-5)${NC}"
     exit 1
     ;;
 esac

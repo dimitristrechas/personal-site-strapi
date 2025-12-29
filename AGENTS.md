@@ -40,7 +40,11 @@ Multi-database support in `config/database.ts` (mysql, postgres, sqlite). Develo
 ### Bootstrap Logic (src/index.ts)
 
 - `register()` - Forces socket encryption for proxy setups
-- `bootstrap()` - Populates dev DB with sample tags, posts, about, contact (dev env only)
+- `bootstrap()` - Empty, no auto-seeding
+
+### Database Seeding (src/seed.ts)
+
+On-demand seeding via `./scripts.sh` option 5 or `docker exec personal-site-strapi yarn seed`. Creates randomized tags, posts, about, contact - no duplicate checks, appends fresh data each run.
 
 ### Configuration Files
 
