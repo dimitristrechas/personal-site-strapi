@@ -25,7 +25,8 @@ RUN yarn build
 FROM base AS prod-deps
 WORKDIR /opt/
 COPY package.json yarn.lock ./
-RUN yarn install --production --frozen-lockfile --prefer-offline --ignore-scripts
+RUN yarn config set network-timeout 600000 -g && \
+    yarn install --production --frozen-lockfile --prefer-offline --ignore-scripts
 
 FROM node:22-alpine
 RUN apk add --no-cache vips-dev
