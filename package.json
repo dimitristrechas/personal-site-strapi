@@ -10,6 +10,7 @@
   "scripts": {
     "build": "strapi build",
     "build:docker": "docker compose up --remove-orphans --build --force-recreate -d",
+    "outdated": "npx npm-check-updates",
     "dev": "strapi develop",
     "develop": "strapi develop",
     "seed": "ts-node src/seed.ts",
