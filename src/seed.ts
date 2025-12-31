@@ -49,7 +49,7 @@ const seedDatabase = async () => {
       data: {
         title: `Sample Post ${postId}`,
         description: "Auto-generated sample post for development.",
-        content: `<p>This is sample content generated at ${new Date().toISOString()}.</p>`,
+        content: `<h1>Sample title for this post</h1><p>This is sample content generated at ${new Date().toISOString()}.</p>`,
         slug: `sample-post-${postId}`,
         tags: createdTags.slice(0, 2),
       },
