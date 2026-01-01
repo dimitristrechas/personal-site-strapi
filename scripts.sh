@@ -49,7 +49,7 @@ echo -e " ${BLUE}(2)${NC}  Stop containers"
 echo -e " ${BLUE}(3)${NC}  Show Docker container status"
 echo -e " ${BLUE}(4)${NC}  Check for npm updates"
 echo -e " ${BLUE}(5)${NC}  Seed database with sample data"
-echo -e " ${BLUE}(6)${NC}  Run code quality checks (Biome)"
+echo -e " ${BLUE}(6)${NC}  Run Biome checks"
 echo ""
 echo -e "${YELLOW}Choose an option:${NC} "
 read OPTION
