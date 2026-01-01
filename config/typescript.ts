@@ -1,3 +1,3 @@
-export default ({ env }) => ({
+export default () => ({
   autogenerate: true,
 });

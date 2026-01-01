@@ -87,9 +87,7 @@ const seedDatabase = async () => {
     }
   }
 
-  const existingContact = await app
-    .documents("api::contact.contact")
-    .findFirst({});
+  const existingContact = await app.documents("api::contact.contact").findFirst({});
   if (existingContact) {
     await app.documents("api::contact.contact").delete({
       documentId: existingContact.documentId,
@@ -120,4 +118,3 @@ seedDatabase().catch((err) => {
   console.error("❌ Seeding failed:", err);
   process.exit(1);
 });
-

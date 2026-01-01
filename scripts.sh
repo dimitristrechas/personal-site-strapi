@@ -49,6 +49,7 @@ echo -e " ${BLUE}(2)${NC}  Stop containers"
 echo -e " ${BLUE}(3)${NC}  Show Docker container status"
 echo -e " ${BLUE}(4)${NC}  Check for npm updates"
 echo -e " ${BLUE}(5)${NC}  Seed database with sample data"
+echo -e " ${BLUE}(6)${NC}  Run code quality checks (Biome)"
 echo ""
 echo -e "${YELLOW}Choose an option:${NC} "
 read OPTION
@@ -95,9 +96,19 @@ case $OPTION in
     fi
     ;;
 
+    6)
+    echo -e "${CYAN}Running Biome code quality checks...${NC}"
+    if yarn biome:check; then
+        echo -e "${GREEN}✅ Code quality checks passed${NC}"
+    else
+        echo -e "${RED}❌ Code quality checks failed${NC}"
+        exit 1
+    fi
+    ;;
+
     *)
     echo -e "${RED}❌ Unknown option: $OPTION${NC}"
-    echo -e "${YELLOW}Please choose a valid option (1-5)${NC}"
+    echo -e "${YELLOW}Please choose a valid option (1-6)${NC}"
     exit 1
     ;;
 esac
