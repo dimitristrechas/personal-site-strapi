@@ -1,7 +1,7 @@
-import path from "path";
+import path from "node:path";
 
 export default ({ env }) => {
-  const client = env("DATABASE_CLIENT", "sqlite");
+  const client = env("DATABASE_CLIENT", "postgres");
 
   const connections = {
     mysql: {

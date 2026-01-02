@@ -6,7 +6,17 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["src/**/*.ts", "config/**/*.ts", "*.ts"]
+    "includes": [
+      "src/**/*.ts",
+      "config/**/*.ts",
+      "*.ts",
+      "*.js",
+      "src/**/*.js",
+      "src/**/*.mjs",
+      "config/**/*.js",
+      "config/**/*.mjs",
+      "**/*.json"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -28,6 +38,9 @@
       },
       "correctness": {
         "noUnusedVariables": "error"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
       }
     }
   },

@@ -1,0 +1,102 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  biome:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+
+      - run: biome ci .
+
+  commits:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Validate commit messages
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            commits=$(git log --format=%H origin/${{ github.base_ref }}..${{ github.sha }})
+          else
+            commits=$(git log --format=%H ${{ github.event.before }}..${{ github.sha }})
+          fi
+
+          pattern="^(feat|fix|docs|style|refactor|test|ci|chore|revert|agents)(\(.+\))?: .{1,}"
+
+          for commit in $commits; do
+            msg=$(git log --format=%B -n 1 $commit | head -n 1)
+            if ! echo "$msg" | grep -qE "$pattern"; then
+              if ! echo "$msg" | grep -qE "^Merge "; then
+                echo "❌ Invalid commit message in $commit:"
+                echo "   $msg"
+                echo ""
+                echo "Must follow Conventional Commits format:"
+                echo "   type(scope)?: description"
+                echo "   Types: feat, fix, docs, style, refactor, test, ci, chore, revert, agents"
+                exit 1
+              fi
+            fi
+          done
+
+  build-and-deploy:
+    needs: [biome, commits]
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 23
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          platforms: linux/arm64
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/personal-site-strapi:latest
+            ghcr.io/${{ github.repository_owner }}/personal-site-strapi:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Trigger Dokploy Deployment
+        run: curl -fsS -X POST "${{ secrets.DOKPLOY_WEBHOOK_URL }}"
