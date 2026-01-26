@@ -2,9 +2,9 @@ import { createStrapi } from "@strapi/strapi";
 
 const generateId = () => crypto.randomUUID().slice(0, 8);
 const generateColor = () =>
-  `#${Math.floor(Math.random() * 16777215)
+  `#${Math.floor(Math.random() * 16777216)
     .toString(16)
-    .padStart(6, "0")}ff`;
+    .padStart(6, "0")}`;
 
 const isUniqueError = (err: unknown): boolean => {
   if (err && typeof err === "object" && "message" in err) {
@@ -43,24 +43,31 @@ const seedDatabase = async () => {
     }
   }
 
-  const postId = generateId();
-  try {
-    await app.documents("api::post.post").create({
-      data: {
-        title: `Sample Post ${postId}`,
-        description: "Auto-generated sample post for development.",
-        content: `<h1>Sample title for this post</h1><p>This is sample content generated at ${new Date().toISOString()}.</p>`,
-        slug: `sample-post-${postId}`,
-        tags: createdTags.slice(0, 2),
-      },
-      status: "published",
-    });
-    console.log(`✅ Created post: sample-post-${postId}`);
-  } catch (err) {
-    if (isUniqueError(err)) {
-      console.log(`⚠️ Skipped post (unique conflict): sample-post-${postId}`);
-    } else {
-      throw err;
+  const postCount = 5;
+  for (let i = 0; i < postCount; i++) {
+    const postId = generateId();
+    const tagCount = Math.floor(Math.random() * 3) + 1;
+    const shuffledTags = [...createdTags].sort(() => Math.random() - 0.5);
+    const postTags = shuffledTags.slice(0, tagCount);
+
+    try {
+      await app.documents("api::post.post").create({
+        data: {
+          title: `Sample Post ${postId}`,
+          description: "Auto-generated sample post for development.",
+          content: `<h1>Sample title for this post</h1><p>This is sample content generated at ${new Date().toISOString()}.</p>`,
+          slug: `sample-post-${postId}`,
+          tags: postTags,
+        },
+        status: "published",
+      });
+      console.log(`✅ Created post: sample-post-${postId} (${tagCount} tags)`);
+    } catch (err) {
+      if (isUniqueError(err)) {
+        console.log(`⚠️ Skipped post (unique conflict): sample-post-${postId}`);
+      } else {
+        throw err;
+      }
     }
   }
 
