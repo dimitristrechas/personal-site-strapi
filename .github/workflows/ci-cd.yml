@@ -100,39 +100,5 @@ jobs:
 
       - name: Trigger Dokploy Deployment
         if: github.event_name == 'push'
-        run: |
-          # Extract first line of commit message
-          TITLE=$(echo '${{ github.event.head_commit.message }}' | head -n1)
-          DESCRIPTION="Commit: ${{ github.sha }}"
-          URL="${{ secrets.DOKPLOY_WEBHOOK_URL }}"
-
-          # Try JSON body first (most common)
-          echo "Attempting JSON body format..."
-          if curl -fsS -X POST "$URL" \
-            -H "Content-Type: application/json" \
-            -d "{\"title\":\"$TITLE\",\"description\":\"$DESCRIPTION\"}"; then
-            echo "✓ Deployment triggered with JSON body"
-            exit 0
-          fi
-
-          # Try query parameters
-          echo "Attempting query parameters..."
-          ENCODED_TITLE=$(printf %s "$TITLE" | jq -sRr @uri)
-          ENCODED_DESC=$(printf %s "$DESCRIPTION" | jq -sRr @uri)
-          if curl -fsS -X POST "${URL}?title=${ENCODED_TITLE}&description=${ENCODED_DESC}"; then
-            echo "✓ Deployment triggered with query params"
-            exit 0
-          fi
-
-          # Try form data
-          echo "Attempting form data..."
-          if curl -fsS -X POST "$URL" \
-            -d "title=$TITLE" \
-            -d "description=$DESCRIPTION"; then
-            echo "✓ Deployment triggered with form data"
-            exit 0
-          fi
-
-          echo "✗ All formats failed"
-          exit 1
+        run: curl -fsS -X POST "${{ secrets.DOKPLOY_WEBHOOK_URL }}"
 
