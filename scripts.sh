@@ -47,7 +47,7 @@ echo -e "${GREEN}--- Options ---${NC}"
 echo -e " ${BLUE}(1)${NC}  Fresh build & start development server"
 echo -e " ${BLUE}(2)${NC}  Stop containers"
 echo -e " ${BLUE}(3)${NC}  Show Docker container status"
-echo -e " ${BLUE}(4)${NC}  Check for npm updates"
+echo -e " ${BLUE}(4)${NC}  Check for outdated packages"
 echo -e " ${BLUE}(5)${NC}  Seed database with sample data"
 echo -e " ${BLUE}(6)${NC}  Run Biome checks"
 echo ""
@@ -82,7 +82,7 @@ case $OPTION in
     ;;
 
     4)
-    echo -e "${CYAN}Checking for npm updates...${NC}"
+    echo -e "${CYAN}Checking for outdated packages...${NC}"
     npx npm-check-updates
     ;;
 

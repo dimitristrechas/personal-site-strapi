@@ -35,7 +35,7 @@ Content types:
 
 ### Database
 
-Multi-database support in `config/database.ts` (mysql, postgres, sqlite). Development defaults to Postgres via env override.
+Database configurations in `config/database.ts`
 
 ### Bootstrap Logic (src/index.ts)
 
@@ -59,3 +59,7 @@ On-demand seeding via `./scripts.sh` option 5 or `docker exec personal-site-stra
 - TypeScript compilation outputs to `dist/`
 - Uses Strapi Documents API (`strapi.documents()`) not legacy entity service
 - Dev DB auto-populates on first run (see src/index.ts:populateDatabase)
+
+## General Instructions
+
+- Do not commit any of your changes unless specifically instructed to do so.
