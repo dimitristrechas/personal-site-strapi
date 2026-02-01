@@ -15,6 +15,16 @@ Important: Always use `./scripts.sh` and the Docker environment for running chec
   - Postgres DB (port 5432)
   - Adminer DB admin (port 9090)
 
+## MCP Server Configuration
+
+MCP (Model Context Protocol) integrations configured in multiple files:
+
+- `mcp.json` - Claude Code configuration with Linear/GitHub servers
+- `.cursor/mcp.json` - Cursor IDE configuration with Linear/GitHub servers
+- `opencode.json` - OpenCode configuration with Linear/GitHub servers
+
+Required environment variables: `LINEAR_MCP_TOKEN`, `GITHUB_MCP_TOKEN`
+
 ## Architecture
 
 Strapi 5 CMS - Headless CMS with TypeScript
