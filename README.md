@@ -1,3 +1,6 @@
+Warning: Not used anymore, keeping for historical reasons
+
+
 The code behind [my personal site/blog backend strapi app](https://www.dimitristrechas.com).
 
 # INSTALLATION NOTES
